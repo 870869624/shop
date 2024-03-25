@@ -3,6 +3,7 @@ package entities
 //检验值是否符合要求
 import (
 	"errors"
+	"shop/models"
 	"time"
 )
 
@@ -16,13 +17,14 @@ type UserLoginResponPayload struct {
 	Password string `json:"password"`
 }
 type UserRegisterPayload struct {
-	ID          int       `json:"id"`
-	Username    string    `json:"username"`
-	Password    string    `json:"password"`
-	Phone       string    `json:"phone"`
-	Gender      int8      `json:"gender"`
-	Age         uint      `json:"age"`
-	RefreshedAt time.Time `json:"refreshedat"`
+	ID       int       `json:"id"`
+	Username string    `json:"username"`
+	Password string    `json:"password"`
+	Phone    string    `json:"phone"`
+	Gender   int8      `json:"gender"`
+	Age      uint      `json:"age"`
+	CreateAt time.Time `json:"createat"`
+	UserKind models.UserKind
 }
 
 func (u *UserRegisterPayload) Validate() error {
@@ -35,6 +37,9 @@ func (u *UserRegisterPayload) Validate() error {
 	if len(u.Password) < 8 || len(u.Password) > 16 {
 		return errors.New("密码长度有误")
 	}
+	// if u.UserKind != 0 || u.UserKind != 1 {
+	// 	return errors.New("用户权限等级无效")
+	// }
 	return nil
 }
 

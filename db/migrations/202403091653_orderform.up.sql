@@ -6,5 +6,6 @@ create table if not exists orderforms(
     color varchar(64) not null comment '商品颜色',
     size varchar(64) not null comment'尺寸',
     unitprice int(11) not null comment'商品单价',
-    quantity int(11) not null comment '商品数量'
+    quantity int(11) not null comment '商品数量',
+    Create_At timestamp default now() comment '创建时间'
 );

@@ -18,13 +18,13 @@ const (
 )
 
 type User struct {
-	ID          int
-	Username    string
-	Password    string
-	Phone       string
-	Gender      int8
-	Age         uint
-	RefreshedAt time.Time
+	ID       int
+	Username string
+	Password string
+	Phone    string
+	Gender   int8
+	Age      uint
+	CreateAt *time.Time `json:"create_at"`
 	UserKind
 }
 
@@ -82,7 +82,7 @@ func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
 
 	// if any fields changed
 	if tx.Statement.Changed() {
-		tx.Statement.SetColumn("refreshedat", time.Now())
+		tx.Statement.SetColumn("create_at", time.Now())
 		return nil
 	}
 	return errors.New("信息未修改")

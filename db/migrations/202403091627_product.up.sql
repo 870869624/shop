@@ -6,5 +6,6 @@ create table if not exists `product`(
     size varchar(64) not null comment'尺寸',
     describtion varchar(64) not null comment '商品描述',
     unitprice int(11) not null comment'商品单价',
-    catalogue_id int(11) not null comment '分类'
+    catalogue_id int(11) not null comment '分类',
+    Create_At timestamp default now() comment '创建时间'
 );

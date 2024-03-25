@@ -24,6 +24,7 @@ func ParaseJwt() func(ctx *gin.Context) {
 			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 				"message": "登陆信息错误",
 			})
+			return
 		}
 		//获得token却在数据库没有该用户
 		request := db.Where(map[string]interface{}{"username": GetUser.Username, "password": GetUser.Password})
@@ -31,6 +32,7 @@ func ParaseJwt() func(ctx *gin.Context) {
 			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 				"message": "权限不足",
 			})
+			return
 		}
 		ctx.Request.Header.Set("user", GetUser.Username)
 	}
