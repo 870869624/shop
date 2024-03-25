@@ -23,6 +23,12 @@ func Connect() *gorm.DB {
 	// 	return nil
 	// }
 	// return db
+	// var ormLogger logger.Interface
+	// if gin.Mode() == "debug" {
+	// 	ormLogger = logger.Default.LogMode(logger.Info)
+	// } else {
+	// 	ormLogger = logger.Default
+	// }
 	sqlDB, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/taobao?charset=utf8mb4&parseTime=True&loc=Local")
 	if err != nil {
 		panic("未连接数据库")

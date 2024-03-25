@@ -51,3 +51,47 @@ func ParseToken(tokenString string) (*UserAuthclaim, error) {
 	}
 	return claim, nil
 }
+
+type UserEmailAuthclaim struct {
+	Username      string `json:"username"`
+	Password      string `json:"password"`
+	Email         string `json:"email"`
+	OperationType uint   `json:"oprationtype"`
+	jwt.RegisteredClaims
+}
+
+// email生成token
+func EmailToken(username string, Opration uint, email, password string) (string, error) {
+	claim := UserEmailAuthclaim{
+		Username:      username,
+		Password:      password,
+		Email:         email,
+		OperationType: Opration,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(TokenExpireDuration)),
+			Issuer:    "景海军",
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
+	tk, err := token.SignedString(key)
+	if err != nil {
+		return "", err
+	}
+	return tk, nil
+}
+
+// email解析token,返回用户信息
+func EmailParseToken(tokenString string) (*UserEmailAuthclaim, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &UserEmailAuthclaim{}, func(t *jwt.Token) (interface{}, error) {
+		return []byte(key), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	claim, ok := token.Claims.(*UserEmailAuthclaim)
+	if !ok {
+		return nil, errors.New("未知的的claim格式")
+	}
+	return claim, nil
+}

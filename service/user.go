@@ -15,6 +15,7 @@ func CreateUser(u entities.UserRegisterPayload) error {
 		Phone:    u.Phone,
 		Gender:   u.Gender,
 		Age:      u.Age,
+		Email:    u.Email,
 		UserKind: u.UserKind,
 	}
 	err1 := user.Creat()

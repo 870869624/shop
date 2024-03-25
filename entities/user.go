@@ -23,6 +23,7 @@ type UserRegisterPayload struct {
 	Phone    string    `json:"phone"`
 	Gender   int8      `json:"gender"`
 	Age      uint      `json:"age"`
+	Email    string    `json:"email"`
 	CreateAt time.Time `json:"createat"`
 	UserKind models.UserKind
 }

@@ -76,6 +76,24 @@ func UserApi(r *gin.Engine) {
 	user_WithAuthGroup := r.Group("/users")
 	user_WithAuthGroup.Use(midleware.ParaseJwt())
 	{
+		//发送邮件
+		user_WithAuthGroup.POST("send_email", func(ctx *gin.Context) {
+			var sendemail service.SendEmailService
+			token := ctx.Request.Header.Get("Authorization")
+			if token == "" {
+				ctx.JSON(http.StatusBadRequest, gin.H{
+					"message": "请登录",
+				})
+				ctx.Abort()
+			}
+			GetUser, _ := models.ParseToken(token)
+			if err := ctx.ShouldBindJSON(&sendemail); err == nil {
+				res := sendemail.Send(ctx.Request.Context(), GetUser.Username)
+				ctx.JSON(http.StatusOK, res)
+			} else {
+				ctx.JSON(http.StatusBadRequest, err)
+			}
+		})
 		//注销
 		user_WithAuthGroup.DELETE("/logout", func(ctx *gin.Context) {
 			var user entities.UserLoginRequestPayload

@@ -5,6 +5,7 @@ create table if not exists `users`(
     phone varchar(64) not null comment '电话号码',
     gender int(2) not null comment'性别',
     age int(2) not null comment '年龄',
+    email varchar(64) not null comment '绑定邮箱',
     Create_At timestamp default now() comment'创建时间',
     user_kind int(2) not null  comment '用户权限等级'
 )

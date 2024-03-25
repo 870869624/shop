@@ -24,6 +24,7 @@ type User struct {
 	Phone    string
 	Gender   int8
 	Age      uint
+	Email    string
 	CreateAt *time.Time `json:"create_at"`
 	UserKind
 }
